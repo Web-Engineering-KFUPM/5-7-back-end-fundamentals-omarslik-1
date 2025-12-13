@@ -14,8 +14,8 @@ app.use((req, res, next) => {
 
 // --- in-memory data (no DB) ---
 let students = [
-  { id: 1, name: 'Aisha' },
-  { id: 2, name: 'Hasan' }
+  { id: 1, name: 'Aisha', submittedAt: new Date().toISOString() },
+  { id: 2, name: 'Hasan', submittedAt: new Date().toISOString() }
 ];
 
 // --- routes ---
@@ -30,7 +30,11 @@ app.post('/api/students', (req, res) => {
   if (!name || !name.trim()) {
     return res.status(400).json({ error: 'Name is required' });
   }
-  const newStudent = { id: Date.now(), name: name.trim() };
+  const newStudent = { 
+    id: Date.now(), 
+    name: name.trim(),
+    submittedAt: new Date().toISOString()
+  };
   students.push(newStudent);
   res.status(201).json(newStudent);
 });

@@ -107,6 +107,19 @@ import './index.css';
 
 const API = 'http://localhost:3000/api/students';
 
+// Helper function to format date
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
 export default function App() {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState('');
@@ -156,7 +169,19 @@ export default function App() {
 
       <ul>
         {students.map((s) => (
-          <li key={s.id} >{s.name}</li>
+          <li key={s.id}>
+            <span>{s.name}</span>
+            {s.submittedAt && (
+              <span style={{ 
+                marginLeft: '1rem', 
+                fontSize: '0.875rem', 
+                color: '#666',
+                fontStyle: 'italic'
+              }}>
+                - Submitted: {formatDate(s.submittedAt)}
+              </span>
+            )}
+          </li>
         ))}
       </ul>
     </main>
